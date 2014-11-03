@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beanio xmlns="http://www.beanio.org/2012/03" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+
+	
+	<!-- 'format' identifies the type of stream -->
+	<stream name="boletas" format="fixedlength">
+		
+			
+		
+		<!-- 'class' binds the header record to a java.util.HashMap -->
+		<record name="header" class="list">
+			<segment class="map" name="registro">
+				<!-- 'rid' indicates this field is used to identify the record -->
+				<!-- <field name="recordType" rid="true" literal="H" /> -->
+				<field name="primeraComumna" length="10"  />
+				<!-- 'format' can be used to provide Date and Number formats -->
+				<field name="segundaComumna"  length="8" />
+				<field name="terceraComumna"  length="8" />
+				<field name="cuartaComumna"  length="8" />
+			</segment>
+		</record>
+
+
+
+	</stream>
+	
+	
+	
+	
+</beanio>
