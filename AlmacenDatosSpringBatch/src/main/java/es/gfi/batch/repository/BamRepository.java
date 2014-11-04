@@ -17,10 +17,33 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-import es.gfi.batch.readers.BamJsonReader;
+import es.gfi.batch.readers.dto.BamJsonReader;
 
 public class BamRepository implements PagingAndSortingRepository {
+	
+	
 
+	private RestTemplate restTemplate;
+	private String urlBam;
+	
+	public RestTemplate getRestTemplate() {
+		return restTemplate;
+	}
+
+	public void setRestTemplate(RestTemplate restTemplate) {
+		this.restTemplate = restTemplate;
+	}
+	
+	public String getUrlBam() {
+		return urlBam;
+	}
+
+	public void setUrlBam(String urlBam) {
+		this.urlBam = urlBam;
+	}
+
+	
+	
 	public Object save(Object entity) {
 		// TODO Auto-generated method stub
 		return null;
@@ -86,46 +109,29 @@ public class BamRepository implements PagingAndSortingRepository {
 		return null;
 	}
 	
-	public Page<Map<String,String>> findByVersionModelo(String modelo,String version,PageRequest request){
-		URI url=null;
-		try {
-			
-			url = new URI("file:///~/objInstancias.json");
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public Page findByVersionModelo(String modelo,String version,PageRequest request){
+		restTemplate= new RestTemplate();
+		
+		BamJsonReader respuesta = restTemplate.getForObject("http://localhost:8080/json/objInstancias.json", BamJsonReader.class);
+		
+		respuesta.getInstancias().get(0);
+		List listaRespuesta=new ArrayList();
+		for(int i=0;i<respuesta.getInstancias().size();i++){
+			Map instanciaActual=(Map)respuesta.getInstancias().get(i);
+			List<String> listaValores=(List)instanciaActual.get("Metric Data");
+			Map linea=new HashMap<String,String>();
+			for(int j=0;j<listaValores.size();j++){
+				linea.put(respuesta.getNombres().get(j), listaValores.get(j));
+			}
+			listaRespuesta.add(linea);		
 		}
-		RestTemplate restTemplate = new RestTemplate();
-		BamJsonReader re=new BamJsonReader();
-		MappingJacksonHttpMessageConverter jsonConverter= new MappingJacksonHttpMessageConverter();
-        
-		restTemplate.getMessageConverters().add(jsonConverter);
-		BamJsonReader respuesta = restTemplate.getForObject("http://localhost:8081/json/objInstancias.json", BamJsonReader.class);
-		Map<String,String> result=new HashMap<String,String>();
-		List<Map<String,String>> lista=new ArrayList<Map<String,String>>();
-		result.put("primeraComumna", "segundo1");
-		result.put("segundaComumna", "segundo1");
-		result.put("terceraComumna", "tercero1");
-		result.put("cuartaComumna", "quinto1");
-		lista.add(result);
+		Page page=new PageImpl(listaRespuesta);
 		
-		result=new HashMap<String,String>();
-		result.put("primeraComumna", "segundo2");
-		result.put("segundaComumna", "segundo2");
-		result.put("terceraComumna", "tercero2");
-		result.put("cuartaComumna", "quinto2");
-		lista.add(result);
-		
-		result=new HashMap<String,String>();
-		result.put("primeraComumna", "segundo3");
-		result.put("segundaComumna", "segundo3");
-		result.put("terceraComumna", "tercero3");
-		result.put("cuartaComumna", "quinto3");
-		lista.add(result);
-		
-		Page page=new PageImpl(lista);
-		
-		return page;
+		if(request.getPageNumber()==2){
+			return new PageImpl(new ArrayList());
+		}else{
+			return page;
+		}
 	}
 
 }

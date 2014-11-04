@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<import resource="data-source-context.xml" />
+	<import resource="jobs.xml" />
+
+	
+
+
+
+
+
+
+
+	<bean id="jobParametersExtractor" class="org.springframework.batch.core.step.job.DefaultJobParametersExtractor">
+		<property name="keys" value="input.file" />
+	</bean>
+	<bean id="itemReader" class="es.gfi.batch.readers.ItemReader" scope="step">
+		<property name="pageSize" value="2" />
+		<property name="methodName" value="findByVersionModelo" />
+		<property name="repository" ref="jsonRepository" />
+		<!-- <property name="arguments"> <list> <value>#{new java.math.BigDecimal(jobParameters[credit])}</value> <value>#{jobParameters['modelo']}"</value> <value>#{jobParameters['version']}"</value> </list> 
+			</property> -->
+		<property name="sort">
+			<map>
+				<entry key="id" value="ASC" />
+			</map>
+		</property>
+	</bean>
+
+
+	<bean id="jsonRepository" class="es.gfi.batch.repository.BamRepository"></bean>
+
+	<bean id="itemWriter" class="es.gfi.batch.writer.BeanIoWriter" scope="step">
+		<property name="ficheroSalida" value="#{jobParameters['out.file.name']}" />
+		<property name="modelo" value="#{jobParameters['modelo']}" />
+		<property name="version" value="#{jobParameters['version']}" />
+	</bean>
+
+
+	
+
+	<bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository" />
+	</bean>
+
+	<bean class="org.springframework.batch.core.configuration.support.JobRegistryBeanPostProcessor">
+		<property name="jobRegistry" ref="jobRegistry" />
+	</bean>
+
+	<!-- <bean id="jobRepository" class="org.springframework.batch.core.repository.support.JobRepositoryFactoryBean" p:isolationLevelForCreate = "${batch.isolationlevel}" p:dataSource-ref="dataSource" p:transactionManager-ref="transactionManager" 
+		p:lobHandler-ref="lobHandler"/> -->
+
+	<bean id="jobRepository" class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
+		<property name="transactionManager" ref="transactionManager" />
+	</bean>
+
+
+	<bean id="mapJobRepository" class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean" lazy-init="true" autowire-candidate="false" />
+
+	<bean id="jobOperator" class="org.springframework.batch.core.launch.support.SimpleJobOperator" p:jobLauncher-ref="jobLauncher" p:jobExplorer-ref="jobExplorer" p:jobRepository-ref="jobRepository"
+		p:jobRegistry-ref="jobRegistry" />
+
+	<bean id="jobExplorer" class="org.springframework.batch.core.explore.support.JobExplorerFactoryBean" p:dataSource-ref="dataSource" />
+
+	<bean id="jobRegistry" class="org.springframework.batch.core.configuration.support.MapJobRegistry" />
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+
+
+</beans>

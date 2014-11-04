@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<job id="boletas" restartable="true" xmlns="http://www.springframework.org/schema/batch">
+		<step id="boletasV1" next="boletasV2">
+			<tasklet>
+				<chunk reader="itemReader" writer="itemWriter" commit-interval="2" />
+				<listeners>
+
+
+				</listeners>
+			</tasklet>
+		</step>
+		<step id="boletasV2">
+			<tasklet>
+				<chunk reader="itemReader" writer="itemWriter" commit-interval="2" />
+				<listeners>
+
+
+				</listeners>
+			</tasklet>
+		</step>
+	</job>
+	<job id="otroModelo" restartable="true" xmlns="http://www.springframework.org/schema/batch">
+		<step id="otroModeloV1">
+			<tasklet>
+				<chunk reader="itemReader" writer="itemWriter" commit-interval="2" />
+				<listeners>
+
+
+				</listeners>
+			</tasklet>
+		</step>
+
+	</job>
+	</beans>

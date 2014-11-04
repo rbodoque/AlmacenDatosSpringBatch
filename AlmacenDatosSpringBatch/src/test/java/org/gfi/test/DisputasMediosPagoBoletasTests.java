@@ -17,23 +17,29 @@ package org.gfi.test;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.batch.core.JobParameters;
+import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.test.JobLauncherTestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/simple-job-launcher-context.xml", "/jobs/disputasMediosPagoBoletas.xml"})
+@ContextConfiguration(locations = { "/simple-job-launcher-context.xml", "/appcontext.xml"})
 public class DisputasMediosPagoBoletasTests {
-	@Autowired
-	private JobLauncherTestUtils jobLauncherTestUtils;
+	@Autowired()
+	private JobLauncherTestUtils boletas;
 	
 	
 	@Test
 	public void testLaunchJob() throws Exception {
-        
-
-		jobLauncherTestUtils.launchJob();
+		 JobParametersBuilder jobParametersBuilder =
+		            new JobParametersBuilder();
+		 jobParametersBuilder.addString("out.file.name", "salida.txt");
+		
+		
+		
+		 boletas.launchJob(jobParametersBuilder.toJobParameters());
 
 	}
 }

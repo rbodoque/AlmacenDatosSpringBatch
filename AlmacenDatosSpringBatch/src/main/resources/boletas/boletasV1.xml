@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beanio xmlns="http://www.beanio.org/2012/03" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+
+	
+	<!-- 'format' identifies the type of stream -->
+	<stream name="boletas" format="fixedlength">
+		
+			
+		
+		<!-- 'class' binds the header record to a java.util.HashMap -->
+		<record name="registro" class="map">
+			
+				<!-- 'rid' indicates this field is used to identify the record -->
+				<!-- <field name="recordType" rid="true" literal="H" /> -->
+				<field name="Alerta_EN0000000265" length="10"  />
+				<!-- 'format' can be used to provide Date and Number formats -->
+				<field name="Alerta_EN0000000266"  length="8" />
+				<field name="Almacen_EN0000000251_COCENG"   length="8" />
+				<field name="Almacen_EN0000000251_FEALEV"  length="8" />
+				<field name="Almacen_EN0000000251_FFEFO1"  length="8" />
+				<field name="Almacen_EN0000000251_FFEFOR"  length="8" />
+				<field name="Almacen_EN0000000251_FFOREC"  length="8" />
+				<field name="Almacen_EN0000000251_HOALEV" length="8" />
+				<field name="Almacen_EN0000000251_IMMRE1" length="8" />
+				<field name="Almacen_EN0000000251_QCCOM1" length="8" />
+				<field name="Almacen_EN0000000251_QCEIMA" length="8" />
+				<field name="Almacen_EN0000000251_QCMARC" length="8" />
+				<field name="Almacen_EN0000000251_QCOPSM" length="8" />
+				<field name="Almacen_EN0000000251_QCPAIC" length="8" />
+				<field name="Almacen_EN0000000251_QCTACN" length="8" />
+				<field name="Almacen_EN0000000251_QCTEAN" length="8" />
+				<field name="Almacen_EN0000000251_QCTI46" length="8" />
+				<field name="Almacen_EN0000000251_QITARJ" length="8" />
+				<field name="Almacen_EN0000000252_COCENG" length="8" />
+				<field name="Almacen_EN0000000252_FEALEV" length="8" />
+				<field name="Almacen_EN0000000252_FFEFO1" length="8" />
+				<field name="Almacen_EN0000000252_FFEFOR" length="8" />
+				<field name="Almacen_EN0000000252_FFOREC" length="8" />
+				<field name="Almacen_EN0000000252_FFOREC" length="8" />
+				<field name="Almacen_EN0000000252_HOALEV" length="8" />
+				<field name="Almacen_EN0000000252_IMMRE1" length="8" />
+				<field name="Almacen_EN0000000252_QCCOM1" length="8" />
+				<field name="Almacen_EN0000000252_QCEIMA" length="8" />
+				<field name="Almacen_EN0000000252_QCMARC" length="8" />
+				<field name="Almacen_EN0000000252_QCOPSM" length="8" />
+				<field name="Almacen_EN0000000252_QCPAIC" length="8" />
+				<field name="Almacen_EN0000000252_QCTACN" length="8" />
+				<field name="Almacen_EN0000000252_QCTEAN" length="8" />
+				<field name="Almacen_EN0000000252_QCTI46" length="8" />
+				<field name="Almacen_EN0000000252_QITARJ" length="8" />
+				<field name="Almacen_EN0000000253_COCENG" length="8" />
+				<field name="Almacen_EN0000000253_FEALEV" length="8" />
+				<field name="Almacen_EN0000000253_FFEFO1" length="8" />
+				<field name="Almacen_EN0000000253_FFEFOR" length="8" />
+				<field name="Almacen_EN0000000253_FFOREC" length="8" />
+				<field name="Almacen_EN0000000253_HOALEV" length="8" />
+				<field name="Almacen_EN0000000253_IMMRE1" length="8" />
+				<field name="Almacen_EN0000000253_QCCOM1" length="8" />
+				<field name="Almacen_EN0000000253_QCEIMA" length="8" />
+				<field name="Almacen_EN0000000253_QCMARC" length="8" />
+				<field name="Almacen_EN0000000253_QCOPSM" length="8" />
+				<field name="Almacen_EN0000000253_QCPAIC" length="8" />
+				<field name="FechaCreacion"  length="8" />
+				<field name="FechaFinalizacion"  length="8" />
+				<field name="FiltroKPI"  length="8" />
+				<field name="NumeroReclamacion_Key"  length="8" />
+				<field name="TerminationTime"  length="8" />
+			
+		</record>
+
+
+
+	</stream>
+	
+	
+	
+	
+</beanio>
