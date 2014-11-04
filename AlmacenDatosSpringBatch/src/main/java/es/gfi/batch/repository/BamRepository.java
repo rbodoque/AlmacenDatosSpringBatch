@@ -3,7 +3,6 @@ package es.gfi.batch.repository;
 import java.io.Serializable;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import es.gfi.batch.readers.BamJsonReader;
@@ -98,10 +97,10 @@ public class BamRepository implements PagingAndSortingRepository {
 		}
 		RestTemplate restTemplate = new RestTemplate();
 		BamJsonReader re=new BamJsonReader();
-		
+		MappingJacksonHttpMessageConverter jsonConverter= new MappingJacksonHttpMessageConverter();
         
-        
-		ResponseEntity<BamJsonReader> respuesta = restTemplate.getForEntity(url, BamJsonReader.class);
+		restTemplate.getMessageConverters().add(jsonConverter);
+		BamJsonReader respuesta = restTemplate.getForObject("http://localhost:8081/json/objInstancias.json", BamJsonReader.class);
 		Map<String,String> result=new HashMap<String,String>();
 		List<Map<String,String>> lista=new ArrayList<Map<String,String>>();
 		result.put("primeraComumna", "segundo1");
