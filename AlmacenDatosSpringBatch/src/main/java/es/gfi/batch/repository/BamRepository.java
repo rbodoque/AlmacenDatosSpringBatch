@@ -1,6 +1,9 @@
 package es.gfi.batch.repository;
 
 import java.io.Serializable;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +15,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+
+import es.gfi.batch.readers.BamJsonReader;
 
 public class BamRepository implements PagingAndSortingRepository {
 
@@ -80,7 +87,21 @@ public class BamRepository implements PagingAndSortingRepository {
 		return null;
 	}
 	
-	Page<Map<String,String>> findByVersionModelo(String modelo,String version,PageRequest request){
+	public Page<Map<String,String>> findByVersionModelo(String modelo,String version,PageRequest request){
+		URI url=null;
+		try {
+			
+			url = new URI("file:///~/objInstancias.json");
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		RestTemplate restTemplate = new RestTemplate();
+		BamJsonReader re=new BamJsonReader();
+		
+        
+        
+		ResponseEntity<BamJsonReader> respuesta = restTemplate.getForEntity(url, BamJsonReader.class);
 		Map<String,String> result=new HashMap<String,String>();
 		List<Map<String,String>> lista=new ArrayList<Map<String,String>>();
 		result.put("primeraComumna", "segundo1");

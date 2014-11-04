@@ -1,0 +1,8 @@
+11-04 00:58:45 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "BATCH_JOB_INSTANCE" no encontrada
+Table "BATCH_JOB_INSTANCE" not found; SQL statement:
+SELECT JOB_INSTANCE_ID, JOB_NAME from BATCH_JOB_INSTANCE where JOB_NAME = ? and JOB_KEY = ? [42102-182]
+11-04 01:00:55 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "BATCH_JOB_INSTANCE" no encontrada
+Table "BATCH_JOB_INSTANCE" not found; SQL statement:
+SELECT JOB_INSTANCE_ID, JOB_NAME from BATCH_JOB_INSTANCE where JOB_NAME = ? and JOB_KEY = ? [42102-182]
